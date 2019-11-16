@@ -88,13 +88,23 @@
             success: function (back) {
               // 登录成功跳转至首页
               // console.log(back);
+
+              // 成功失败都会以模态框的形式提示用户信息
+              $('#myModal .modal-body').text(back.msg);
+              $('#myModal').modal();
+
               if (back.code == 200) {
                 // alert(back.msg);
-                $('#myModal .modal-body').text(back.msg);
-                $('#myModal').modal();
                 // 记录用户的登录----记录返回的token令牌------并在登录后的后面每次请求都能访问到这个令牌-------登陆一次后的免登录模式实现
                 window.localStorage.setItem('token', back.token);
-                window.location.href = './index_self.html';
+ 
+                // 隐藏模态框之后再跳转----1.模态框确认按钮点击事件后跳转
+                // 2.模态框自带隐藏后触发事件    hidden.bs.modal	此事件在模态框被隐藏（并且同时在 CSS 过渡效果完成）之后被触发。
+                // $('#myModal').on('hidden.bs.modal', function (e) {// do something...})
+                $('#myModal').on('hidden.bs.modal',function(e){
+                  window.location.href = './index_self.html';
+                })
+                
               }/*  else {
                 // alert(back.msg);
                 $('#myModal .modal-body').text(back.msg);
