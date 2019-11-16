@@ -38,6 +38,80 @@
     </div>
   </div>
 
+  <!-- 使用bootStrap模态框-----已经引入了bootStrap文件----------js插件---模态框----用法 -->
+  <!-- $('#myModal').modal(options) -->
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+              aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">友情提示</h4>
+        </div>
+        <div class="modal-body">
+          <!-- 提示内容 -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./libs/http.js"></script>
+  <!-- 基地址：  http://localhost:8080/api/v1 -->
+  <script>
+    $(function () {
+
+      $('.input_sub').on('click', function (e) {
+        e.preventDefault();//-----------------------------@!!!!!注意添加submit的点击事件及阻止默认跳转---否则依然会刷新网页---跟没登录一个样
+        // 获取用户输入----发送ajax请求
+        var username = $('.input_txt').val().trim();
+        var password = $('.input_pass').val().trim();
+        // console.log(password);
+
+        // 判断用户输入是否为空
+        if (username == '' || password == '') {
+          // alert('用户名或密码为空');
+          $('#myModal .modal-body').text('用户名或密码为空');
+          $('#myModal').modal();
+        }
+          // 打开使用  open with livesever------解决跨域问题  以及  不用刷新  就可以实时更新数据
+          $.ajax({
+            type: 'post',
+            url: BigNew.user_login,
+            data: {
+              username: username,
+              password: password
+            },
+            success: function (back) {
+              // 登录成功跳转至首页
+              // console.log(back);
+              if (back.code == 200) {
+                // alert(back.msg);
+                $('#myModal .modal-body').text(back.msg);
+                $('#myModal').modal();
+                // 记录用户的登录----记录返回的token令牌------并在登录后的后面每次请求都能访问到这个令牌-------登陆一次后的免登录模式实现
+                window.localStorage.setItem('token', back.token);
+                window.location.href = './index_self.html';
+              }/*  else {
+                // alert(back.msg);
+                $('#myModal .modal-body').text(back.msg);
+                $('#myModal').modal();
+              } */      //--------请求失败的函数在jQuery文件中已经写入
+            }
+          })
+      })
+
+
+
+
+    })
+
+
+  </script>
+
 </body>
 
 </html>
