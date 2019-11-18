@@ -52,7 +52,7 @@
         <!-- 右侧主体内容 -->
         <div class="main" id="main_body">
             <!-- 添加iframe标签完成页面的局部显示----- iframe的 name属性值   设置为  a标签的 target属性值-----点击a标签以iframe的方式跳转 -->
-            <iframe src="" frameborder="0" name="my_frame" style="height: 100%; width: 100%;"></iframe>
+            <iframe src="./main_count.html" frameborder="0" name="my_frame" style="height: 100%; width: 100%;"></iframe>
         </div>
     </div>
 
@@ -69,7 +69,7 @@
                 }, */
                 success:function(back){
                     // 此时是禁止访问数据的-----将登录时ajax请求返回的token令牌携带即可
-                    console.log(back);
+                    // console.log(back);
 
                     // // 将返回的数据渲染至页面
                     $('.sider>.user_info>span>i').text(back.data.nickname);
