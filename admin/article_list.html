@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="./css/iconfont.css">
     <link rel="stylesheet" href="./css/main.css">
     <script src="./libs/jquery-1.12.4.min.js"></script>
+    <script src="./libs/bootstrap/js/bootstrap.min.js"></script>
+    <script src="./libs/jquery.twbsPagination.js"></script>
     <!-- 引入模板引擎js文件 -->
     <script src="./libs/template-web.js"></script>
 </head>
@@ -69,9 +71,44 @@
                 </tbody>
             </table>
             <div class="row text-center">
+                <ul class="pagination" id="pagination"></ul>
+                <p>没有数据</p>
             </div>
         </div>
     </div>
+
+    <!-- 文章类别的下拉选项模板引擎 -->
+    <script id="dis_temp" type="text/html">
+        <option value="">所有分类</option>
+        {{each data}}
+        <!--           这里是按照value---对应下的id    取值的 -->
+            <option value='{{$value.id}}'>{{$value.name}}</option>
+        {{/each}}
+    </script>
+
+
+    <!-- 文章列表的所有文章模板 -->
+    <script id="cator_temp" type="text/html">
+        {{each data.data}}
+        <tr>
+                <td>{{$value.title}}</td>
+                <td>{{$value.author}}</td>
+                <td>{{$value.category}}</td>
+                <td class="text-center">{{$value.date}}</td>
+                <td class="text-center">{{$value.state}}</td>
+                <td class="text-center">
+                    <a href="article_edit.html?id=$value.id" class="btn btn-default btn-xs">编辑</a>
+                    <a href="javascript:void(0);" data_id={{$value.id}} class="btn btn-danger btn-xs delete">删除</a>
+                </td>
+            </tr>
+        {{/each}}
+    </script>
+
+
+
+    <script src="./libs/http.js"></script>
+
+    <script src="./js/article_list.js"></script>
 </body>
 
 </html>
