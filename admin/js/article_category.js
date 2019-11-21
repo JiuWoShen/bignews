@@ -106,5 +106,13 @@ $(function () {
                 })
             } 
         })
+        /* $('tbody').on('click','.edit_ar',function(){
+            var id_edit=$(this).attr('data-id');
+            console.log($(this).);
+            $.ajax({
+
+            })
+            
+        }) */
 
 })
